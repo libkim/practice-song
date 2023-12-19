@@ -20,4 +20,4 @@
 - 마음에 들지 않는 곡들을 자유롭게 삭제할 수 있습니다.
 
 ### OPEN API
-- OPEN API를 사용했습니다.(<a href="https://api.manana.kr/karaoke" target="_blank">https://api.manana.kr/karaoke</a>) 제공에 감사드립니다.
+- OPEN API를 사용했습니다.(<https://api.manana.kr/karaoke/>) 제공에 감사드립니다.
