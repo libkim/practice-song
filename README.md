@@ -1,7 +1,7 @@
-# practice-songs
+# Practice Songs
 내가 부를 수 있는 노래들을 저장하고 더 잘부를 수 있도록 피드백을 남겨보세요.
 
-# 사용해보기
+## 사용해보기
 ## 연습곡 저장소: <https://spartauser123.pythonanywhere.com/>
 
 ### 곡 검색 기능
