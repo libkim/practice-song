@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>연습곡 저장소</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+        body {
+            padding-right: 0;
+            font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            margin-bottom: 0;
+        }
+
+        .h1,
+        .h2,
+        .h3,
+        .h4,
+        .h5 {
+            margin-bottom: 0;
+            line-height: 0;
+        }
+
+        p {
+            margin-bottom: 0;
+        }
+        
+        h1 {
+            font-weight: 600;
+        }
+
+        header {
+            height: 432px;
+            padding: 0 1rem;
+            color: #6c757d;
+            background-color: rgba(0,0,0,.03);
+        }
+
+        #practiceSongCardHeader {
+            padding-bottom: 0;
+            border-bottom: 0;
+            color: #6c757d;
+        }
+
+        #practiceSongCardBody {
+            background-color: rgba(0,0,0,.03);
+        }
+
+        #practiceSongCardFooter {
+            height: 288px;
+            padding: 0 1rem;
+            border-top: 0;
+            text-align: center;
+            color: #6c757d;
+            background-color: rgba(0,0,0,.03);
+        }
+
+        .h1 .material-symbols-rounded {
+            font-size: calc(1.375rem + 1.5vw);
+            color: #6c757d;
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 600,
+                'GRAD' 0,
+                'opsz' 20;
+        }
+
+        .material-symbols-rounded {
+            font-size: 1.25rem;
+        }
+
+        .link .material-symbols-rounded {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 500,
+                'GRAD' 0,
+                'opsz' 20;
+            vertical-align: text-top;
+        }
+
+        .carousel-control-prev .material-symbols-rounded,
+        .carousel-control-next .material-symbols-rounded {
+            font-size: 1.5rem;
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 300,
+                'GRAD' 0,
+                'opsz' 20;
+        }
+
+        .accordion-header .material-symbols-rounded {
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 300,
+                'GRAD' 0,
+                'opsz' 20;
+        }
+        
+        .plus {
+            padding-top: 0.25rem;
+            font-family: 'Gothic A1', sans-serif;
+        }
+
+        button {
+            font-weight: inherit;
+        }
+
+        #practiceSong {
+            border: 0;
+        }
+
+        #searchBy {
+            width: 4rem;
+            border: 1px solid #ced4da;
+            border-right: 0;
+            border-top-left-radius: 0.25rem;
+            border-bottom-left-radius: 0.25rem;
+            text-align: center;
+        }
+
+        #query {
+            border-left: 0;
+        }
+
+        .card-header {
+            padding: .75rem 1.75rem;
+        }
+
+        .icon-button {
+            padding: 0;
+            border: 0;
+            line-height: 0;
+        }
+
+        .card-footer {
+            padding: 0;
+            background-color: initial;
+        }
+
+        .song-card-body {
+            padding: .75rem 0;
+        }
+
+        .no {
+            font-weight: 600;
+        }
+
+        .youtube {
+            font-weight: 600;
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            cursor: pointer;
+        }
+        .api {
+            font-weight: 600;
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            color: #6c757d;
+            cursor: pointer;
+        }
+        
+        .api:hover {
+            color: #6c757d;
+        }
+
+        .accordion-button {
+            padding: .5rem 1rem;
+            --bs-gutter-x: 0;
+            font-size: inherit;
+            text-align: center;
+            background-color: initial;
+        }
+
+        .accordion-button:not(.collapsed) {
+            box-shadow: initial;
+            color: #0d6efd;
+        }
+
+        .accordion-button:focus {
+            z-index: initial;
+            border-color: initial;
+            outline: initial;
+            box-shadow: initial;
+        }
+
+        .accordion-button::after {
+            display: inline-block;
+            width: auto;
+            height: auto;
+            margin-left: 0;
+            content: "arrow_forward_ios";
+            font-size: 1.5rem;
+            font-family: 'Material Symbols Rounded';
+            vertical-align: middle;
+            background-image: initial;
+            transform: rotate(90deg);
+        }
+        .accordion-button:not(.collapsed)::after {
+            font-size: 1.5rem;
+            font-family: 'Material Symbols Rounded';
+            vertical-align: middle;
+            background-image: initial;
+            transform: rotate(-90deg);
+        }
+
+        .accordion-item {
+            background-color: initial;
+            border: initial;
+        }
+
+        .accordion-header {
+            font-weight: 600;
+        }
+
+        .carousel-control-next,
+        .carousel-control-prev {
+            width: auto;
+            padding: 0 .5rem;
+            padding-top: .25rem;
+            color: #dedad6;
+        }
+
+        .carousel-control-prev {
+            display: none;
+        }
+
+        .carousel-control-next-icon,
+        .carousel-control-prev-icon {
+            background-image: initial;
+        }
+
+        .btn-group>.btn-group:not(:first-child),
+        .btn-group>.btn:not(:first-child) {
+            border-left: 0;
+        }
+
+        .modal-title {
+            font-weight: 600;
+        }
+
+        .text-container {
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+
+            span {
+                display: inline-block;
+            }
+
+            .animate {
+                position: relative;
+                animation: leftright 3s infinite alternate ease-in-out;
+            }
+        }
+        .modal-dialog-scrollable .modal-body {
+            overflow-x: hidden;
+        }
+
+        .btn-group-vertical>.btn-group:not(:first-child), .btn-group-vertical>.btn:not(:first-child) {
+            margin-top: 0;
+        }
+
+        @keyframes leftright {
+            0%,
+            20% {
+                transform: translateX(0%);
+                left: 0%;
+            }
+
+            80%,
+            100% {
+                transform: translateX(-100%);
+                left: 100%;
+            }
+        }
+    </style>
+</head>
+
+<header class="d-flex flex-row align-items-center">
+    <h1 style="font-size: 4rem;">PRACTICE SONGS</h1>
+</header>
+<body>
+    <main>
+        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="searchModalLabel">연습곡 검색</h5>
+                        <button type="button" class="btn-close" aria-label="Close" onclick="location.reload()"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row d-flex flex-row justify-content-between gy-3">
+                            <div class="col-auto" style="flex: 1;">
+                                <div class="input-group">
+                                    <label for="searchBy" class="visually-hidden">Search by</label>
+                                    <select name="search_by" id="searchBy">
+                                        <option value="title" selected>제목</option>
+                                        <option value="singer">가수</option>
+                                    </select>
+                                    <input type="text" name="query" class="form-control" id="query" aria-label="Query with search by">
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-primary" onclick="checkBlank()">검색</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="selectModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="selectModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="selectModalLabel">연습곡 선택</h5>
+                        <button type="button" class="btn-close" aria-label="Close" onclick="location.reload()"></button>
+                    </div>
+                    <div class="modal-body d-flex flex-column align-items-center">
+                        <div class="btn-group-vertical" id="searchResults" role="group" aria-label="Search results"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="addModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addModalLabel">연습곡 추가</h5>
+                        <button type="button" class="btn-close" aria-label="Close" onclick="location.reload()"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="inputTjNo" class="form-label">TJ</label>
+                                <input type="text" name="tj_no" class="form-control" id="inputTjNo">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputKumyoungNo" class="form-label">금영</label>
+                                <input type="text" name="kumyoung_no" class="form-control" id="inputKumyoungNo">
+                            </div>
+                            <div class="col-12">
+                                <label for="inputTitle" class="form-label">제목</label>
+                                <input type="text" name="title" class="form-control" id="inputTitle">
+                            </div>
+                            <div class="col-12">
+                                <label for="inputSinger" class="form-label">가수</label>
+                                <input type="text" name="singer" class="form-control" id="inputSinger">
+                            </div>
+                            <div class="col-12">
+                                <label for="inputMemo" class="form-label">메모</label>
+                                <textarea name="memo" class="form-control" id="inputMemo"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="location.reload()">취소</button>
+                        <button type="button" class="btn btn-primary" onclick="addSong()">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="col-12" id="successMessage">
+                                <p>곡 추가 완료!</p>
+                            </div>
+                            <div class="col-12 d-flex flex-row justify-content-end">
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="updateModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateModalLabel">연습곡 수정</h5>
+                        <button type="button" class="btn-close" aria-label="Close" onclick="location.reload()"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="inputUpdatedTjNo" class="form-label">TJ</label>
+                                <input type="text" name="tj_no" class="form-control" id="inputUpdatedTjNo">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputUpdatedKumyoungNo" class="form-label">금영</label>
+                                <input type="text" name="kumyoung_no" class="form-control" id="inputUpdatedKumyoungNo">
+                            </div>
+                            <div class="col-12">
+                                <label for="inputUpdatedTitle" class="form-label">제목</label>
+                                <input type="text" name="title" class="form-control" id="inputUpdatedTitle">
+                            </div>
+                            <div class="col-12">
+                                <label for="inputUpdatedSinger" class="form-label">가수</label>
+                                <input type="text" name="singer" class="form-control" id="inputUpdatedSinger">
+                            </div>
+                            <div class="col-12">
+                                <label for="inputUpdatedMemo" class="form-label">메모</label>
+                                <textarea name="memo" class="form-control" id="inputUpdatedMemo"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="location.reload()">취소</button>
+                        <button type="button" class="btn btn-primary" id="updateSongButton" onclick="updateSong()">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="alertModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="alertModalLabel">연습곡 삭제</h5>
+                        <button type="button" class="btn-close" aria-label="Close" onclick="location.reload()"></button>
+                    </div>
+                    <div class="modal-body" id="alertModalBody">
+                        <p>이 연습곡을 삭제하시겠습니까?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="location.reload()">취소</button>
+                        <button type="button" class="btn btn-primary" id="deleteSongButton" onclick="deleteSong()">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" id="practiceSong">
+            <div class="card-header d-flex flex-row justify-content-between align-items-center" id="practiceSongCardHeader">
+                <div>
+                    <h1>연습 중인 곡&nbsp;</h1>
+                </div>
+                <button type="button" class="btn icon-button" data-bs-toggle="modal" data-bs-target="#searchModal">
+                    <div class="h1">
+                        <span class="material-symbols-rounded">add_circle</span>
+                    </div>
+                </button>
+            </div>
+            <div class="card-body" id="practiceSongCardBody">
+                <div class="row row-cols-1 row-cols-sm-1 justify-content-sm-start row-cols-md-2 row-cols-lg-2 justify-content-lg-start row-cols-xl-3 row-cols-xxl-3 justify-content-xxl-start gy-3">
+                    {% for song in data | reverse %}
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-body song-card-body">
+                                    <div id="carousel{{ song.id }}" class="carousel carousel-dark slide" data-bs-interval="false">
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active">
+                                                <div
+                                                    class="row row-cols-2 row-cols-sm-4 row-cols-md-2 row-cols-lg-4 row-cols-xl-2 row-cols-xxl-4 gy-2 ps-3 pe-3">
+                                                    <div class="col col-4 order-1 col-sm-2 order-sm-1 col-md-4 order-md-1 col-lg-2 order-lg-1 col-xl-4 order-xl-1 col-xxl-2 order-xxl-1">
+                                                        <p>TJ</p>
+                                                        <p class="no">{{ song.tj_no }}</p>
+                                                    </div>
+                                                    <div class="col col-4 order-3 col-sm-2 order-sm-2 col-md-4 order-md-3 col-lg-2 order-lg-2 col-xl-4 order-xl-3 col-xxl-2 order-xxl-2">
+                                                        <p>금영</p>
+                                                        <p class="no">{{ song.kumyoung_no }}</p>
+                                                    </div>
+                                                    <div class="col col-8 order-2 col-sm-4 order-sm-3 col-md-8 order-md-2 col-lg-4 order-lg-3 col-xl-8 order-xl-2 col-xxl-4 order-xxl-3">
+                                                        <p>곡 정보</p>
+                                                        <div class="text-container">
+                                                            <span>{{ song.title }}</span>
+                                                        </div>
+                                                        <div class="text-container">
+                                                            <span>{{ song.singer }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col col-8 order-4 col-sm-4 order-sm-4 col-md-8 order-md-4 col-lg-4 order-lg-4 col-xl-8 order-xl-4 col-xxl-4 order-xxl-4">
+                                                        <p>곡 듣기</p>
+                                                        <div class="link">
+                                                            <span class="material-symbols-rounded">
+                                                                link
+                                                            </span>
+                                                            <span class="youtube" onclick="showConfirmModal(`https://www.youtube.com/results?search_query={{ song.singer }}+{{ song.title }}+official+video`)">
+                                                                YouTube
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="carousel-item">
+                                                <div class="d-flex flex-row justify-content-center btn-group ps-5 pe-3"
+                                                    role="group" aria-label="Basic outlined example">
+                                                    <button type="button" class="btn btn-outline-primary" onclick="showUpdateModal('{{ song.id }}')">수정</button>
+                                                    <button type="button" class="btn btn-outline-primary" onclick="showAlertModal('{{ song.id }}')">삭제</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button class="carousel-control-prev" type="button"
+                                            data-bs-target="#carousel{{ song.id }}" data-bs-slide="prev"
+                                            onclick="toggleVisibility(this)">
+                                            <span class="carousel-control-prev-icon material-symbols-rounded" aria-hidden="true">arrow_back_ios_new</span>
+                                            <span class="visually-hidden">Previous</span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button"
+                                            data-bs-target="#carousel{{ song.id }}" data-bs-slide="next"
+                                            onclick="toggleVisibility(this)">
+                                            <span class="carousel-control-next-icon material-symbols-rounded" aria-hidden="true">arrow_forward_ios</span>
+                                            <span class="visually-hidden">Next</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="accordion accordion-flush" id="accordionFlush{{ song.id }}">
+                                        <div class="accordion-item">
+                                            <p class="accordion-header" id="flush-headingOne">
+                                                <button class="row justify-content-center accordion-button collapsed material-symbols-rounded"
+                                                    type="button" data-bs-toggle="collapse"
+                                                    data-bs-target="#flush{{ song.id }}-collapseOne" aria-expanded="false"
+                                                    aria-controls="flush-collapseOne">
+                                                    메모
+                                                </button>
+                                            </p>
+                                            <div id="flush{{ song.id }}-collapseOne" class="accordion-collapse collapse"
+                                                aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlush{{ song.id }}">
+                                                <div class="accordion-body">
+                                                    {{ song.memo }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="card-footer d-flex flex-row justify-content-center align-items-center" id="practiceSongCardFooter">
+                <div class="link">
+                    이 웹사이트는 오픈 API
+                    <span class="material-symbols-rounded">
+                        link
+                    </span>
+                    <a class="api" href="https://api.manana.kr/karaoke" target="_blank">https://api.manana.kr/karaoke</a>를 사용하여 만들어졌습니다.
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script>
+        function toggleVisibility(clickedDiv) {
+            clickedDiv.style.display = 'none';
+            var siblingDiv = clickedDiv.nextElementSibling || clickedDiv.previousElementSibling;
+            if (siblingDiv) {
+                siblingDiv.style.display = 'inline-block';
+            }
+        }
+    </script>
+    <script>
+        // querySelectorAll을 사용하여 모든 .text-container 요소를 선택
+        let textContainers = document.querySelectorAll(".text-container");
+
+        // 각각의 .text-container 요소에 대해 반복
+        textContainers.forEach(container => {
+            // 현재 요소의 자식 span 요소 선택
+            let text = container.querySelector("span");
+
+            // 조건 검사 및 클래스 추가
+            if (container.clientWidth < text.clientWidth) {
+                text.classList.add("animate");
+            }
+        });
+    </script>
+    <script>
+        let successModal = document.getElementById('successModal')
+        successModal.addEventListener('hidden.bs.modal', function (event) {
+            location.reload();
+        })
+    </script>
+    <script>
+        function checkBlank() {
+            let query = $('#query').val().replace(/[^\w\s가-힣一-龠ぁ-んァ-ン]/g, "");
+            let successMessage = document.getElementById('successMessage');
+            
+            if (query.replace(/\s| /gi, "").length == 0) {
+                $('#searchModal').modal('hide');
+                $('#successModal').modal('show');
+
+                successMessage.innerHTML = `
+                    <p>검색어를 입력해 주세요</p>
+                `;
+            } else {
+                showSelectModal();
+            }
+        }
+
+        function showSelectModal() {
+            let searchBy = document.getElementById('searchBy').value;
+            let query = document.getElementById('query').value;
+
+            $.ajax({
+                type: 'POST',
+                url: '/search',
+                data: { search_by: searchBy, query: query },
+                success: function (response) {
+                    $('#searchModal').modal('hide');
+                    $('#selectModal').modal('show');
+                    sendSearchResults(response.search_results);
+                },
+                error: function (error) {
+                    console.error('서버 오류:', error);
+                }
+            });
+        }
+
+        function sendSearchResults(data) {
+            let selectModalLabel = document.getElementById('selectModalLabel');
+            let searchResults = document.getElementById('searchResults');
+
+            if (data.length > 0) {
+                for (let i = 0; i < data.length; i++) {
+                    searchResults.innerHTML += `
+                        <button type="button" class="btn btn-outline-primary" onclick="showAddModal(\`${data?.[i].tj_no}\`, \`${data?.[i].kumyoung_no}\`, \`${data?.[i].title}\`, \`${data?.[i].singer}\`)">
+                            <div class="text-container">
+                                <span>${data?.[i].title}</span>
+                            </div>
+                            <div class="text-container">
+                                <span>${data?.[i].singer}</span>
+                            </div>
+                        </button>
+                    `;
+                }
+            } else {
+                selectModalLabel.innerHTML = `
+                    곡 검색 결과 없음
+                `;
+                searchResults.innerHTML = `
+                    <ul>
+                        <li>단어의 철자가 정확한지 확인해 보세요</li>
+                        <li>한글을 영어로 혹은 영어를 한글로 입력했는지 확인해 보세요</li>
+                        <li>검색어의 단어 수를 줄이거나 특징적인 단어로 검색해 보세요</li>
+                        <li>검색 옵션이 정확한지 확인해 보세요</li>
+                    </ul>
+                `;
+            }
+            
+        }
+
+        function showAddModal(tjNo, kumyoungNo, title, singer) {
+            $('#selectModal').modal('hide');
+            $('#addModal').modal('show');
+
+            let inputTjNo = document.getElementById('inputTjNo');
+            let inputKumyoungNo = document.getElementById('inputKumyoungNo');
+            let inputTitle = document.getElementById('inputTitle');
+            let inputSinger = document.getElementById('inputSinger');
+
+            inputTjNo.value = tjNo;
+            inputKumyoungNo.value = kumyoungNo;
+            inputTitle.value = title;
+            inputSinger.value = singer;
+        }
+
+        function addSong() {
+            let tjNo = document.getElementById('inputTjNo').value;
+            let kumyoungNo = document.getElementById('inputKumyoungNo').value;
+            let title = document.getElementById('inputTitle').value;
+            let singer = document.getElementById('inputSinger').value;
+            let memo = document.getElementById('inputMemo').value;
+
+            $.ajax({
+                type: 'POST',
+                url: '/add',
+                data: {
+                    tj_no: tjNo,
+                    kumyoung_no: kumyoungNo,
+                    title: title,
+                    singer: singer,
+                    memo: memo
+                },
+                success: function () {
+                    $('#addModal').modal('hide');
+                    $('#successModal').modal('show');
+                },
+                error: function (error) {
+                    console.error('서버 오류:', error);
+                }
+            });
+        }
+
+        function showUpdateModal(id) {
+            let inputTjNo = document.getElementById('inputUpdatedTjNo');
+            let inputKumyoungNo = document.getElementById('inputUpdatedKumyoungNo');
+            let inputTitle = document.getElementById('inputUpdatedTitle');
+            let inputSinger = document.getElementById('inputUpdatedSinger');
+            let inputMemo = document.getElementById('inputUpdatedMemo');
+            
+            $.ajax({
+                type: 'POST',
+                url: '/inquire',
+                data: { id: id },
+                success: function (song) {
+                    $('#updateModal').modal('show');
+
+                    inputTjNo.value = song.tj_no;
+                    inputKumyoungNo.value = song.kumyoung_no;
+                    inputTitle.value = song.title;
+                    inputSinger.value = song.singer;
+                    inputMemo.value = song.memo;
+                    document.getElementById('updateSongButton').setAttribute('onclick', `updateSong(${song.id})`);
+                },
+                error: function (error) {
+                    console.error('서버 오류:', error);
+                }
+            });
+        }
+
+        function updateSong(id) {
+            let tjNo = document.getElementById('inputUpdatedTjNo').value;
+            let kumyoungNo = document.getElementById('inputUpdatedKumyoungNo').value;
+            let title = document.getElementById('inputUpdatedTitle').value;
+            let singer = document.getElementById('inputUpdatedSinger').value;
+            let memo = document.getElementById('inputUpdatedMemo').value;
+            let successMessage = document.getElementById('successMessage');
+
+            $.ajax({
+                type: 'POST',
+                url: '/update',
+                data: {
+                    id: id,
+                    tj_no: tjNo,
+                    kumyoung_no: kumyoungNo,
+                    title: title,
+                    singer: singer,
+                    memo: memo
+                },
+                success: function () {
+                    $('#updateModal').modal('hide');
+                    $('#successModal').modal('show');
+
+                    successMessage.innerHTML = `
+                        <p>곡 수정 완료!</p>
+                    `;
+                },
+                error: function (error) {
+                    console.error('서버 오류:', error);
+                }
+            });
+        }
+
+        function showAlertModal(id) {
+            $('#alertModal').modal('show');
+
+            document.getElementById('deleteSongButton').setAttribute('onclick', `deleteSong(${id})`);
+        }
+
+        function showConfirmModal(url) {
+            let alertModalLabel = document.getElementById('alertModalLabel');
+            let alertModalBody = document.getElementById('alertModalBody');
+
+            $('#alertModal').modal('show');
+
+            alertModalLabel.innerHTML = `
+                연습곡 듣기
+            `;
+            alertModalBody.innerHTML = `
+                <p>유튜브에서 이 곡을 재생하시겠습니까?</p>
+            `;
+
+            document.getElementById('deleteSongButton').setAttribute('onclick', `window.open(\`${url}\`); location.reload();`);
+        }
+
+        function deleteSong(id) {
+            let successMessage = document.getElementById('successMessage');
+
+            $.ajax({
+                type: 'POST',
+                url: '/delete',
+                data: { id: id },
+                success: function () {
+                    $('#alertModal').modal('hide');
+                    $('#successModal').modal('show');
+
+                    successMessage.innerHTML = `
+                        <p>곡 삭제 완료!</p>
+                    `;
+                },
+                error: function (error) {
+                    console.error('서버 오류:', error);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
